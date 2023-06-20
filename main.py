@@ -99,6 +99,26 @@ def change_steps(user, userid, app_token, step=None):
     except Exception as err:
         print(err)
         return None
+def push_wx(_sckey, desp=""):
+    """
+    推送server酱
+    """
+    if _sckey == '':
+        print("[注意] 未提供sckey，不进行推送！")
+    else:
+        server_url = f"https://sc.ftqq.com/{_sckey}.send"
+        params = {
+            "text": '小米运动 步数修改',
+            "desp": desp
+        }
+
+        response = requests.get(server_url, params=params)
+        json_data = response.json()
+
+        if json_data['errno'] == 0:
+            print(f"[{now}] 推送成功。")
+        else:
+            print(f"[{now}] 推送失败：{json_data['errno']}({json_data['errmsg']})")
 
 
 def sbs_api_info(user, password, step):
@@ -121,14 +141,14 @@ def sbs_api_info(user, password, step):
 if __name__ == "__main__":
     account = [# 账号 密码 步数
         ['1936851112@qq.com', 'pan736661722', None],
-#       ['X202210020216@stu.ncwu.edu.cn', 'pan736661722', None],
-#       ['panxinghaolalala@163.com', 'pan736661722', None],
+        ['X202210020216@stu.ncwu.edu.cn', 'pan736661722', None],
+        ['panxinghaolalala@163.com', 'pan736661722', None],
     ]
     for i in account:
         step = i[2]
         # 步数为空出则以下范围随机取值
         if not step:
-            step = random.randint(30050, 30100)
+            step = random.randint(18000, 30000)
 
         login_token, userid = login(i[0], i[1])
         if not login_token:
@@ -143,6 +163,7 @@ if __name__ == "__main__":
         result = change_steps(i[0], userid, app_token, str(step))
         if not result:
             continue
+        
 
 
 # 13位时间戳pyinstaller -F -w index.py
