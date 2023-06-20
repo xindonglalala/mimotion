@@ -99,26 +99,7 @@ def change_steps(user, userid, app_token, step=None):
     except Exception as err:
         print(err)
         return None
-def push_wx(_sckey, desp=""):
-    """
-    推送server酱
-    """
-    if _sckey == '':
-        print("[注意] 未提供sckey，不进行推送！")
-    else:
-        server_url = f"https://sc.ftqq.com/{_sckey}.send"
-        params = {
-            "text": '小米运动 步数修改',
-            "desp": desp
-        }
 
-        response = requests.get(server_url, params=params)
-        json_data = response.json()
-
-        if json_data['errno'] == 0:
-            print(f"[{now}] 推送成功。")
-        else:
-            print(f"[{now}] 推送失败：{json_data['errno']}({json_data['errmsg']})")
 
 
 def sbs_api_info(user, password, step):
