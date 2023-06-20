@@ -4,7 +4,7 @@ import re
 import random
 
 
-# 13位时间戳
+# 13位时间戳1
 def get_timestamp():
     return str(int(time.time() * 1000))
 
